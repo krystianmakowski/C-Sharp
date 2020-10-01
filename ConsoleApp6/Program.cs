@@ -45,57 +45,76 @@ namespace ConsoleApp6
             string surname = "";
             int age = 0;
             string male = "";
-            int postcode = 0;
+            string postcode = "";
             string city = "";
             string street = "";
-            int housenumber = 0;
-            int pesel = 0;
+            string housenumber = "";
+            string pesel ="";
 
             switch (selection.ToUpper())
             {
                 case "A":
+
+                    Console.WriteLine("Podaj numer Pesel");
+                    pesel = Console.ReadLine();
+                    while (pesel.Length != 11)
+                    {
+                        Console.WriteLine("Błędne dane. Pesel musi się składać z 11 cyfr");
+                        Console.WriteLine("Spróbój jeszcze raz");
+                        pesel = Console.ReadLine();
+                    }
+                    Console.WriteLine("Podaj imię: ");
+                    name = Console.ReadLine();
+                    Console.WriteLine("Podaj nazwisko: ");
+                    surname = Console.ReadLine();
+                    Console.WriteLine("Podaj wiek: ");
                     try
                     {
-                        Console.WriteLine("Podaj numer Pesel");
-                        pesel = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Podaj imię: ");
-                        name = Console.ReadLine();
-                        Console.WriteLine("Podaj nazwisko: ");
-                        surname = Console.ReadLine();
-                        Console.WriteLine("Podaj wiek: ");
                         age = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Podaj płeć: ");
-                        male = Console.ReadLine();
+                    }
+                    catch (FormatException) { Console.WriteLine("Błędne dane"); } 
+
+                        Console.WriteLine("Podaj płeć: m - mężczyzna / k - kobieta");
+                        try
+                        {
+                            string male2 = Console.ReadLine();
+                            if (male2 == "k")
+                            {
+                                male = "kobieta";
+                            }
+                            else if (male2 == "m")
+                            {
+                                male = "mężczyzna";
+                            }
+                        }
+                        catch (FormatException) { Console.WriteLine("Błędne dane"); }
                         Console.WriteLine("Podaj miasto");
                         city = Console.ReadLine();
                         Console.WriteLine("Podaj kod pocztowy: ");
-                        postcode = int.Parse(Console.ReadLine());
+                        postcode = Console.ReadLine();
                         Console.WriteLine("Podaj ulice: ");
                         street = Console.ReadLine();
                         Console.WriteLine("Podaj numer domu: ");
-                        housenumber = int.Parse(Console.ReadLine());
-                    
+                        housenumber = Console.ReadLine();
+
 
 
                         if (book.add(pesel, name, surname, age, male, postcode, city, street, housenumber))
                         {
-                        Console.WriteLine("Adres zostały dodany pomyślnie!");
+                            Console.WriteLine("Adres zostały dodany pomyślnie!");
                         }
                         else
                         {
-                        Console.WriteLine("Adres istnieje już na liście, dla numeru {0}.", pesel);
+                            Console.WriteLine("Adres istnieje już na liście, dla numeru {0}.", pesel);
                         }
-                    }
-                    catch (FormatException)
-                    {
-                        Console.WriteLine("Błędne dane");
-                    }
-                    break;
+
+                        break;
+                    
                 case "U":
                     try
                     {
                         Console.WriteLine("Podaj pesel osoby do usunięcia: ");
-                        pesel = int.Parse(Console.ReadLine());
+                        pesel = Console.ReadLine();
                         if (book.remove(pesel))
                         {
                             Console.WriteLine("Adres został usunięty pomyślnie");
@@ -125,7 +144,7 @@ namespace ConsoleApp6
                     try
                     {
                         Console.WriteLine("Podaj numer pesel użytkownika do edycji: ");
-                        pesel = int.Parse(Console.ReadLine());
+                        pesel = Console.ReadLine();
                         Address addr = book.find(pesel);
                         if (addr == null)
                         {
@@ -136,11 +155,11 @@ namespace ConsoleApp6
                             Console.WriteLine("Podaj miasto");
                             addr.city = Console.ReadLine();
                             Console.WriteLine("Podaj kod pocztowy: ");
-                            addr.postcode = int.Parse(Console.ReadLine());
+                            addr.postcode = Console.ReadLine();
                             Console.WriteLine("Podaj ulice: ");
                             addr.street = Console.ReadLine();
                             Console.WriteLine("Podaj numer domu: ");
-                            addr.housenumber = int.Parse(Console.ReadLine());
+                            addr.housenumber = Console.ReadLine();
                             Console.WriteLine("Adres dla numeru {0} został zaktualizowany", pesel);
                         }
                     }

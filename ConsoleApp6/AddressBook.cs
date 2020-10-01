@@ -11,7 +11,7 @@ class AddressBook
         addresses = new List<Address>();
     }
 
-    public bool add(int pesel, string name, string surname, int age, string male, int postcode, string city, string street, int housenumber)
+    public bool add(string pesel, string name, string surname, int age, string male, string postcode, string city, string street, string housenumber)
     {
         Address addr = new Address(pesel, name, surname, age, male, postcode, city, street, housenumber);
         Address result = find(pesel);
@@ -27,7 +27,7 @@ class AddressBook
         }
     }
 
-    public bool remove(int pesel)
+    public bool remove(string pesel)
     {
         Address addr = find(pesel);
         
@@ -51,7 +51,7 @@ class AddressBook
         return (addresses.Count == 0);
     }
 
-    public Address find(int pesel)
+    public Address find(string pesel)
     {
         Address addr = addresses.Find((a) => a.pesel == pesel);
         return addr;
