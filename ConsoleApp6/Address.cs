@@ -10,9 +10,9 @@ class Address
     public string postcode;
     public string city;
     public string street;
-    public string housenumber;
+    public int housenumber;
 
-    public Address(string pesel, string name, string surname, int age, string male, string postcode, string city, string street, string housenumber)
+    public Address(string pesel, string name, string surname, int age, string male, string postcode, string city, string street, int housenumber)
     {
         this.name = name;
         this.surname = surname;

@@ -11,7 +11,7 @@ class AddressBook
         addresses = new List<Address>();
     }
 
-    public bool add(string pesel, string name, string surname, int age, string male, string postcode, string city, string street, string housenumber)
+    public bool add(string pesel, string name, string surname, int age, string male, string postcode, string city, string street, int housenumber)
     {
         Address addr = new Address(pesel, name, surname, age, male, postcode, city, street, housenumber);
         Address result = find(pesel);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace ConsoleApp6
 {
@@ -48,7 +49,7 @@ namespace ConsoleApp6
             string postcode = "";
             string city = "";
             string street = "";
-            string housenumber = "";
+            int housenumber = 0;
             string pesel ="";
 
             switch (selection.ToUpper())
@@ -68,47 +69,55 @@ namespace ConsoleApp6
                     Console.WriteLine("Podaj nazwisko: ");
                     surname = Console.ReadLine();
                     Console.WriteLine("Podaj wiek: ");
-                    try
+                    while (!int.TryParse(Console.ReadLine(), out age))
+                        Console.WriteLine("Zła wartość");                  
+                    Console.WriteLine("Podaj płeć: m - mężczyzna / k - kobieta");
+                    while (true)
                     {
-                        age = int.Parse(Console.ReadLine());
-                    }
-                    catch (FormatException) { Console.WriteLine("Błędne dane"); } 
-
-                        Console.WriteLine("Podaj płeć: m - mężczyzna / k - kobieta");
-                        try
+                        string male2 = Console.ReadLine();
+                        if (male2 == "k")
                         {
-                            string male2 = Console.ReadLine();
-                            if (male2 == "k")
-                            {
-                                male = "kobieta";
-                            }
-                            else if (male2 == "m")
-                            {
-                                male = "mężczyzna";
-                            }
+                            male = "kobieta";
+                            break;
                         }
-                        catch (FormatException) { Console.WriteLine("Błędne dane"); }
-                        Console.WriteLine("Podaj miasto");
-                        city = Console.ReadLine();
-                        Console.WriteLine("Podaj kod pocztowy: ");
+                        else if (male2 == "m")
+                        {
+                            male = "mężczyzna";
+                            break;
+                        }
+                    }
+                    Console.WriteLine("Podaj miasto");
+                    city = Console.ReadLine();
+                    Console.WriteLine("Podaj kod pocztowy[xx-xxx]: ");
+                    while (true)
+                    {
                         postcode = Console.ReadLine();
-                        Console.WriteLine("Podaj ulice: ");
-                        street = Console.ReadLine();
-                        Console.WriteLine("Podaj numer domu: ");
-                        housenumber = Console.ReadLine();
+                        Regex postCodeValidation = new Regex(@"[0-9]{2}-[0-9]{3}");
+                        if (postCodeValidation.Match(postcode).Success)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Try again");
+                        }
+                    }        
+                    Console.WriteLine("Podaj ulice: ");
+                    street = Console.ReadLine();
+                    Console.WriteLine("Podaj numer domu: ");
+                    while (!int.TryParse(Console.ReadLine(), out housenumber))
+                        Console.WriteLine("Zła wartość");                 
 
-
-
-                        if (book.add(pesel, name, surname, age, male, postcode, city, street, housenumber))
+                    if (book.add(pesel, name, surname, age, male, postcode, city, street, housenumber))
                         {
                             Console.WriteLine("Adres zostały dodany pomyślnie!");
                         }
-                        else
+                    else
                         {
                             Console.WriteLine("Adres istnieje już na liście, dla numeru {0}.", pesel);
                         }
 
-                        break;
+                    break;
                     
                 case "U":
                     try
@@ -154,12 +163,26 @@ namespace ConsoleApp6
                         {
                             Console.WriteLine("Podaj miasto");
                             addr.city = Console.ReadLine();
-                            Console.WriteLine("Podaj kod pocztowy: ");
-                            addr.postcode = Console.ReadLine();
+                            Console.WriteLine("Podaj kod pocztowy[xx-xxx]: ");
+                            while (true)
+                            {
+                                string postcode2 = Console.ReadLine();
+                                Regex postCodeValidation = new Regex(@"[0-9]{2}-[0-9]{3}");
+                                if (postCodeValidation.Match(postcode2).Success)
+                                {
+                                    postcode2 = addr.postcode;
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Try again");
+                                }
+                            }
                             Console.WriteLine("Podaj ulice: ");
                             addr.street = Console.ReadLine();
                             Console.WriteLine("Podaj numer domu: ");
-                            addr.housenumber = Console.ReadLine();
+                            while (!int.TryParse(Console.ReadLine(), out addr.housenumber))
+                                Console.WriteLine("Zła wartość");
                             Console.WriteLine("Adres dla numeru {0} został zaktualizowany", pesel);
                         }
                     }
